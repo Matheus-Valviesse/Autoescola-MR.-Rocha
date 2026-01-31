@@ -1,9 +1,17 @@
+import About from "./components/About"
+import Header from "./components/Header"
+import Hero from "./components/Hero"
+import Stats from "./components/Stats"
+
 function App() {
 
 
   return (
     <>
-a
+      <Header/>
+      <Hero/>
+      <Stats/>
+      <About/>
     </>
   )
 }
