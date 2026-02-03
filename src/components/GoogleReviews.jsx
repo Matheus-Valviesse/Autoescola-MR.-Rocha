@@ -1,71 +1,127 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
-const reviews = [
-  {
-    name: "Lucas Mendes",
-    category: "Categoria B",
-    text: "A auto escola foi incrível! Os instrutores são muito pacientes e a metodologia de ensino é moderna. Passei de primeira e me sinto muito seguro dirigindo.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg"
-  },
-  {
-    name: "Fernanda Souza",
-    category: "Categoria A",
-    text: "Melhor escolha que fiz. O atendimento é rápido e os carros são novos. Recomendo para todos que querem tirar a habilitação sem estresse.",
-    image: "https://randomuser.me/api/portraits/women/44.jpg"
-  },
-  {
-    name: "Roberto Lima",
-    category: "Categoria A+B",
-    text: "Profissionalismo total. Desde a matrícula até o exame prático, fui muito bem assessorado. Obrigado equipe pelo apoio em todas as etapas!",
-    image: "https://randomuser.me/api/portraits/men/46.jpg"
-  }
+const allReviews = [
+  { name: "Lucas Mendes", text: "A auto escola foi incrível! Os instrutores são muito pacientes e a metodologia de ensino é moderna. Passei de primeira.", image: "https://randomuser.me/api/portraits/men/32.jpg", rating: 5 },
+  { name: "Fernanda Souza", text: "Melhor escolha que fiz. O atendimento é rápido e os carros são novos. Recomendo para todos.", image: "https://randomuser.me/api/portraits/women/44.jpg", rating: 5 },
+  { name: "Roberto Lima", text: "Profissionalismo total. Desde a matrícula até o exame prático, fui muito bem assessorado.", image: "https://randomuser.me/api/portraits/men/46.jpg", rating: 5 },
+  { name: "Ana Clara", text: "Excelente suporte! Perdi o medo de dirigir graças aos instrutores calmos e atenciosos.", image: "https://randomuser.me/api/portraits/women/65.jpg", rating: 5 },
+  { name: "João Pedro", text: "Carros sempre limpos e novos. O agendamento pelo app facilita muito a vida de quem trabalha.", image: "https://randomuser.me/api/portraits/men/22.jpg", rating: 4 },
+  { name: "Juliana Paes", text: "O curso teórico foi super dinâmico e a parte prática me deu a confiança que eu precisava.", image: "https://randomuser.me/api/portraits/women/33.jpg", rating: 5 },
 ];
 
-const GoogleReviews = () => {
-  return (
-    <section className="py-20 bg-white px-4">
-      <div className="max-w-7xl mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 border-l-4 border-[#0B1F92] pl-6"
-        >
-          <h2 className="text-[#0B1F92] text-3xl md:text-4xl font-black uppercase tracking-tight">
-            O que dizem nossos alunos
-          </h2>
-          <p className="text-slate-500 text-lg mt-2 font-medium">
-            Confira como a nossa metodologia tem ajudado centenas de novos motoristas.
-          </p>
-        </motion.div>
+const TIMER_DURATION = 20000; // 20 segundos
 
+const GoogleReviews = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 3 >= allReviews.length ? 0 : prev + 3));
+    setProgress(0);
+  }, []);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 3 < 0 ? Math.max(allReviews.length - 3, 0) : prev - 3));
+    setProgress(0);
+  };
+
+  // Timer para o progresso e troca automática
+  useEffect(() => {
+    const interval = 100; // Atualiza a barra a cada 100ms
+    const step = (interval / TIMER_DURATION) * 100;
+
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress >= 100) {
+          nextSlide();
+          return 0;
+        }
+        return oldProgress + step;
+      });
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
+  const visibleReviews = allReviews.slice(currentIndex, currentIndex + 3);
+
+  return (
+    <section className="py-24 bg-slate-50 px-4 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        
+        {/* Header com Setas de Navegação */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="border-l-8 border-[#0B1F92] pl-6"
+          >
+            <h2 className="text-[#000000] text-4xl font-black uppercase tracking-tight">
+              Depoimentos <span className="text-[#0B1F92]">reais</span>
+            </h2>
+            <p className="text-slate-500 text-lg mt-2 font-medium">
+              Nota 4.9/5 no Google Business
+            </p>
+          </motion.div>
+
+          <div className="flex items-center gap-4">
+            <button onClick={prevSlide} className="p-3 rounded-full border-2 border-slate-200 hover:border-[#0B1F92] hover:text-[#0B1F92] transition-all active:scale-90">
+              <ChevronLeft size={28} />
+            </button>
+            <button onClick={nextSlide} className="p-3 rounded-full border-2 border-slate-200 hover:border-[#0B1F92] hover:text-[#0B1F92] transition-all active:scale-90">
+              <ChevronRight size={28} />
+            </button>
+          </div>
+        </div>
+
+        {/* Barra de Progresso (Sinalização de Tempo) */}
+        <div className="w-full h-1.5 bg-slate-200 rounded-full mb-12 overflow-hidden">
+          <motion.div 
+            className="h-full bg-[#0B1F92]"
+            style={{ width: `${progress}%` }}
+            transition={{ ease: "linear" }}
+          />
+        </div>
+
+        {/* Cards com AnimatePresence */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="flex flex-col p-8 bg-[#f8f8f5] rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300"
-            >
-              <div className="flex gap-1 mb-6 text-yellow-400">
-                {[...Array(5)].map((_, i) => <Star key={i} size={20} fill="currentColor" />)}
-              </div>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8 italic flex-grow">
-                "{review.text}"
-              </p>
-              <div className="flex items-center gap-4 pt-6 border-t border-slate-200">
-                <img src={review.image} alt={review.name} className="w-14 h-14 rounded-full ring-2 ring-[#0B1F92]" />
-                <div>
-                  <p className="text-[#000000] font-black text-lg leading-tight">{review.name}</p>
-                  <p className="text-[#0B1F92] text-sm font-bold uppercase">{review.category}</p>
+          <AnimatePresence mode='wait'>
+            {visibleReviews.map((review, index) => (
+              <motion.div 
+                key={`${currentIndex}-${index}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex flex-col p-8 bg-white rounded-[2.5rem] border border-slate-50 shadow-[0_20px_50px_rgba(11,31,146,0.1)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] transition-all duration-500 relative group"
+              >
+                <Quote className="absolute top-6 right-8 text-slate-100 group-hover:text-blue-50 transition-colors" size={40} />
+                
+                <div className="flex gap-1 mb-6 text-yellow-400">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} size={18} fill="currentColor" />
+                  ))}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                <p className="text-slate-600 text-lg leading-relaxed mb-8 italic flex-grow relative z-10">
+                  "{review.text}"
+                </p>
+
+                <div className="flex items-center gap-4 pt-6 border-t border-slate-100">
+                  <img src={review.image} alt={review.name} className="w-12 h-12 rounded-full ring-2 ring-[#0B1F92] object-cover" />
+                  <div>
+                    <p className="text-[#000000] font-black text-base">{review.name}</p>
+                    <div className="flex items-center gap-1 text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                      <Star size={10} fill="currentColor" className="text-yellow-400" />
+                      Avaliação no Google
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
