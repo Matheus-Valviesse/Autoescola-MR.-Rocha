@@ -2,50 +2,32 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
-const allReviews = [
-  { name: "Lucas Mendes", text: "A auto escola foi incrível! Os instrutores são muito pacientes e a metodologia de ensino é moderna. Passei de primeira.", image: "https://randomuser.me/api/portraits/men/32.jpg", rating: 5 },
-  { name: "Fernanda Souza", text: "Melhor escolha que fiz. O atendimento é rápido e os carros são novos. Recomendo para todos.", image: "https://randomuser.me/api/portraits/women/44.jpg", rating: 5 },
-  { name: "Roberto Lima", text: "Profissionalismo total. Desde a matrícula até o exame prático, fui muito bem assessorado.", image: "https://randomuser.me/api/portraits/men/46.jpg", rating: 5 },
-  { name: "Ana Clara", text: "Excelente suporte! Perdi o medo de dirigir graças aos instrutores calmos e atenciosos.", image: "https://randomuser.me/api/portraits/women/65.jpg", rating: 5 },
-  { name: "João Pedro", text: "Carros sempre limpos e novos. O agendamento pelo app facilita muito a vida de quem trabalha.", image: "https://randomuser.me/api/portraits/men/22.jpg", rating: 4 },
-  { name: "Juliana Paes", text: "O curso teórico foi super dinâmico e a parte prática me deu a confiança que eu precisava.", image: "https://randomuser.me/api/portraits/women/33.jpg", rating: 5 },
-];
+import commentsData from '../data/comments.json';
 
-const TIMER_DURATION = 20000; // 20 segundos
+const TIMER_DURATION = 15000; // 20 segundos
 
 const GoogleReviews = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
 
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 3 >= allReviews.length ? 0 : prev + 3));
-    setProgress(0);
+const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 3 >= commentsData.length ? 0 : prev + 3));
   }, []);
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 3 < 0 ? Math.max(allReviews.length - 3, 0) : prev - 3));
-    setProgress(0);
-  };
+  // Função para voltar o slide
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 3 < 0 ? Math.max(commentsData.length - 3, 0) : prev - 3));
+  }, []);
 
-  // Timer para o progresso e troca automática
-  useEffect(() => {
-    const interval = 100; // Atualiza a barra a cada 100ms
-    const step = (interval / TIMER_DURATION) * 100;
-
+ useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress >= 100) {
-          nextSlide();
-          return 0;
-        }
-        return oldProgress + step;
-      });
-    }, interval);
+      nextSlide();
+    }, TIMER_DURATION);
 
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [currentIndex, nextSlide]);
+  
 
-  const visibleReviews = allReviews.slice(currentIndex, currentIndex + 3);
+const visibleReviews = commentsData.slice(currentIndex, currentIndex + 3);
 
   return (
     <section className="py-24 bg-slate-50 px-4 relative overflow-hidden">
@@ -79,9 +61,11 @@ const GoogleReviews = () => {
         {/* Barra de Progresso (Sinalização de Tempo) */}
         <div className="w-full h-1.5 bg-slate-200 rounded-full mb-12 overflow-hidden">
           <motion.div 
+            key={`progress-${currentIndex}`}
             className="h-full bg-[#0B1F92]"
-            style={{ width: `${progress}%` }}
-            transition={{ ease: "linear" }}
+            initial={{ width: "0%" }}
+            animate={{ width: "100%" }}
+            transition={{duration: TIMER_DURATION / 1000, ease: "linear" }}
           />
         </div>
 
