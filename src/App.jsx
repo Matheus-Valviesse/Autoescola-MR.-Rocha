@@ -1,4 +1,5 @@
 import About from "./components/About"
+import Footer from "./components/Footer"
 import GoogleReviews from "./components/GoogleReviews"
 import Header from "./components/Header"
 import Hero from "./components/Hero"
@@ -17,6 +18,7 @@ function App() {
       <LocationMap/>
       <Services/>
       <GoogleReviews/>
+      <Footer/>
     </>
   )
 }
