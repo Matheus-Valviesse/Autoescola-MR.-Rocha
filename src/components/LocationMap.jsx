@@ -20,8 +20,8 @@ const LocationSection = () => {
   };
 
   return (
-    <section className="w-full py-20 px-4 md:px-10 lg:px-40 bg-[#f8f8f5]" id="contato">
-      <div className="max-w-[1200px] mx-auto">
+    <section className="w-full py-20 px-4 md:px-10 lg:px-40 bg-[#f8f8f5] " id="contato">
+      <div className="max-w-[1200px] mx-auto border border-slate-200  rounded-[2.5rem]">
         <motion.div 
           initial="hidden"
           whileInView="visible"

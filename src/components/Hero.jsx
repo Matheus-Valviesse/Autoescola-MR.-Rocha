@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MdOutlineVerified } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { GrValidate } from "react-icons/gr";
 
 const Hero = () => {
   return (
@@ -16,7 +17,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="flex flex-col gap-6 order-2 lg:order-1 text-center lg:text-left"
           >
-            <div className="inline-flex items-center justify-center lg:justify-start gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#0B1F92] w-fit mx-auto lg:mx-0">
+            <div className="inline-flex items-center justify-center lg:justify-start gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#0B1F92] border-1 w-fit mx-auto lg:mx-0">
               <span className="material-symbols-outlined text-[16px]">
                 <MdOutlineVerified />
               </span>
@@ -39,10 +40,13 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-              <button className="group relative flex h-14 items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#fad51e] px-8 text-base font-bold text-[#000000] transition-all hover:scale-[1.02] shadow-lg shadow-yellow-200">
+              <a 
+              href='http://wa.me/5521969428303'  
+              target="_blank" 
+              className="group relative flex h-14 items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#fad51e] px-8 text-base font-bold text-[#000000] transition-all  shadow-lg shadow-yellow-200 hover:scale-[1.1] ">
                 <FaWhatsapp className='w-8 h-8' />
                 <span>Quero me Matricular</span>
-              </button>
+              </a>
             </div>
           </motion.div>
 
@@ -67,11 +71,11 @@ const Hero = () => {
                 transition={{ delay: 0.5 }}
                 className="absolute bottom-6 left-6 right-6 lg:left-8 lg:right-auto bg-white/95 backdrop-blur shadow-lg rounded-xl p-4 flex items-center gap-4 max-w-xs ring-1 ring-black/5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-600">
-                  <span className="material-symbols-outlined">school</span>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full ">
+                  <GrValidate className='w-20 h-20 text-[#0c2091]'/>
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#000000]">Aprovação Garantida</p>
+                  <p className="text-sm font-bold text-[#000000]">Maior taxa de aprovação da região.</p>
                   <p className="text-xs text-slate-500">Método de ensino exclusivo</p>
                 </div>
               </motion.div>
