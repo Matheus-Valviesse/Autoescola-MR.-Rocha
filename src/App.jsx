@@ -1,4 +1,4 @@
-import About from "./components/About"
+
 import Footer from "./components/Footer"
 import GoogleReviews from "./components/GoogleReviews"
 import Header from "./components/Header"

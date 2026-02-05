@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import { IoStar } from "react-icons/io5";
 
 const stats = [
-  { label: 'Alunos Formados', value: '880+' },
-  { label: 'Anos de Mercado', value: '2' },
-  { label: 'Taca de aprovação', value: '90%' },
+  { label: 'Alunos Formados', value: '1200+' },
+  { label: 'Anos de Mercado', value: '3' },
+  { label: 'Taca de aprovação', value: '76%' },
   { label: 'Nota no Google', value: '4.9/5' }, // Alterado conforme solicitado
 ];
 

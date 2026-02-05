@@ -9,6 +9,8 @@ import {
   MessageCircle 
 } from 'lucide-react';
 
+import { FaWhatsapp } from "react-icons/fa";
+
 const LocationSection = () => {
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -53,9 +55,9 @@ const LocationSection = () => {
                 <div>
                   <h3 className="mb-1 text-xl font-black text-[#000000]">Unidade Campo Grande</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    Estrada do Campinho, 1234<br/>
-                    Campo Grande, Rio de Janeiro - RJ<br/>
-                    CEP: 23070-220
+                    Rua O Tempo e O Vento, n° 45<br/>
+                    Anil, Rio de Janeiro - RJ<br/>
+                    CEP: 22753-340
                   </p>
                 </div>
               </div>
@@ -68,22 +70,22 @@ const LocationSection = () => {
                 <div>
                   <h3 className="mb-1 text-xl font-black text-[#000000]">Horário de Atendimento</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    Segunda a Sexta: 08:00 às 18:00<br/>
-                    Sábado: 08:00 às 12:00
+                    Segunda a Sexta: 07:00 às 21:00<br/>
+                    Sábado: 07:00 às 14:00
                   </p>
                 </div>
               </div>
 
               {/* Telefones / Contato */}
               <div className="flex gap-5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-yellow-50 text-[#0B1F92]">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-[#0B1F92]">
                   <Phone size={26} />
                 </div>
                 <div>
                   <h3 className="mb-1 text-xl font-black text-[#000000]">Telefones</h3>
                   <p className="text-base leading-relaxed text-slate-600">
-                    (21) 3333-4444<br/>
-                    (21) 97138-8736 (WhatsApp)
+                    (21) 96942-8303<br/>
+                    (21) 96579-3730
                   </p>
                 </div>
               </div>
@@ -91,20 +93,20 @@ const LocationSection = () => {
 
             <div className="mt-12 flex flex-col sm:flex-row gap-4">
               <a 
-                href="https://wa.me/5521971388736" 
+                href="https://wa.me/5521969428303" 
                 target="_blank" 
-                className="group flex flex-1 items-center justify-center gap-3 rounded-2xl bg-[#f9f91f] px-8 py-4 text-base font-black text-[#000000] transition-all hover:bg-[#eaea0c] hover:shadow-lg active:scale-95"
+                className="group flex flex-1 items-center justify-center gap-3 rounded-2xl  px-6 py-2 text-base font-black text-[#0b1f92] transition-all hover:bg-[#0b1f92] hover:text-white  active:scale-95 border-4 border-[#0b1f92] hover:scale-[1.1]"
               >
-                <MessageCircle size={20} />
+                <FaWhatsapp className='w-8 h-8' />
                 <span>WhatsApp</span>
               </a>
               <a 
-                href="https://www.google.com/maps" 
+                href="https://www.google.com/maps/place/Autoescola+Mr+Rocha/@-22.9645795,-43.3390867,17z/data=!3m1!4b1!4m6!3m5!1s0x9bd9299b397579:0xfa29f5b7bb31ee7e!8m2!3d-22.9645845!4d-43.3365118!16s%2Fg%2F11vrdwvtm1?entry=ttu&g_ep=EgoyMDI2MDIwMS4wIKXMDSoASAFQAw%3D%3D" 
                 target="_blank" 
-                className="group flex flex-1 items-center justify-center gap-3 rounded-2xl bg-[#0B1F92] px-8 py-4 text-base font-black text-white transition-all hover:opacity-90 hover:shadow-lg active:scale-95"
+                className="group flex flex-1 items-center justify-center gap-3 rounded-2xl bg-[#0B1F92] px-6 py-2 text-base font-black text-white transition-all hover:opacity-80 hover:shadow-lg active:scale-95 border-4 border-[#0b1f92] hover:scale-[1.1]"
               >
                 <span>Traçar Rota</span>
-                <Navigation size={20} className="transition-transform group-hover:translate-x-1" />
+                <Navigation size={20}  />
               </a>
             </div>
           </div>
@@ -112,7 +114,7 @@ const LocationSection = () => {
           {/* --- Coluna Direita: Google Maps Iframe --- */}
           <div className="relative min-h-[400px] w-full bg-slate-100 lg:min-h-full">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14700.000000000001!2d-43.558!3d-22.9!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDU0JzAwLjAiUyA0M8KwMzMnMjguOCJX!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5m2!1spt-BR!2sbr" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3673.610172650706!2d-43.33908672393165!3d-22.964579539940406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bd9299b397579%3A0xfa29f5b7bb31ee7e!2sAutoescola%20Mr%20Rocha!5e0!3m2!1spt-PT!2sbr!4v1770270160436!5m2!1spt-PT!2sbr"
               className="absolute inset-0 h-full w-full grayscale-[20%] contrast-[1.1] opacity-90"
               style={{ border: 0 }}
               allowFullScreen=""
