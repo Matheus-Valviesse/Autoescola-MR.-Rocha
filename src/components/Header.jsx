@@ -15,7 +15,7 @@ const Header = () => {
         {/* Logo e Nome */}
         <div className="flex items-center gap-3">
           <motion.img 
-            src="/header-logo2.svg" 
+            src="/header-logo.svg" 
             alt="Logo Auto Escola" 
             className="w-20 h-20 object-contain"
             // Leve efeito de escala na logo ao carregar
@@ -23,7 +23,7 @@ const Header = () => {
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           />
-          <h2 className="text-xl font-bold tracking-tight text-[#0B1F92]">Mr. Rocha</h2>
+          <h2 className="text-xl font-bold tracking-tight text-[#0B1F92]">MR Rocha</h2>
         </div>
 
         {/* Desktop Nav */}

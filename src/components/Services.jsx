@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, Bike, ShieldCheck, Star, MousePointerClick, CheckCircle2 } from 'lucide-react';
 
+import plansData from '../data/plans.json';
+console.log(plansData)
 const categories = [
   { id: 'cat-b', label: 'Carro (B)', icon: Car },
   { id: 'cat-a', label: 'Moto (A)', icon: Bike },
@@ -10,33 +12,7 @@ const categories = [
   { id: 'add-a', label: 'Adição A', icon: Bike },
 ];
 
-const plansData = {
-  'cat-b': [
-    { name: "Básico", priceCash: "300,00", priceInstallment: "400,00", installments: 2, features: ["2 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false },
-    { name: "Intermediário", priceCash: "650,00", priceInstallment: "800,00", installments: 4, features: ["5 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: true },
-    { name: "Complementar", priceCash: "1.300,00", priceInstallment: "1.500,00", installments: 10, features: ["10 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false }
-  ],
-  'cat-a': [
-    { name: "Básico", priceCash: "300,00", priceInstallment: "400,00", installments: 2, features: ["2 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false },
-    { name: "Intermediário", priceCash: "650,00", priceInstallment: "800,00", installments: 4, features: ["5 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: true },
-    { name: "Complementar", priceCash: "1.300,00", priceInstallment: "1.500,00", installments: 10, features: ["10 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false }
-  ],
-  'cat-ab': [
-    { name: "Básico", priceCash: "600,00", priceInstallment: "800,00", installments: 4, features: ["4 Aulas Práticas", "Aluguel do 1º veículo GRÁTIS"], highlight: false },
-    { name: "Intermediário", priceCash: "1.300,00", priceInstallment: "1.500,00", installments: 10, features: ["10 Aulas Práticas", "Aluguel do 1º veículo GRÁTIS"], highlight: true },
-    { name: "Complementar", priceCash: "1.799,00", priceInstallment: "1.900,00", installments: 10, features: ["20 Aulas Práticas", "Aluguel do 1º veículo GRÁTIS"], highlight: false }
-  ],
-  'add-b': [
-    { name: "Básico", priceCash: "300,00", priceInstallment: "400,00", installments: 2, features: ["2 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false },
-    { name: "Intermediário", priceCash: "650,00", priceInstallment: "800,00", installments: 4, features: ["4 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: true },
-    { name: "Complementar", priceCash: "1.300,00", priceInstallment: "1.500,00", installments: 10, features: ["10 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false }
-  ],
-  'add-a': [
-    { name: "Básico", priceCash: "300,00", priceInstallment: "400,00", installments: 2, features: ["2 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false },
-    { name: "Intermediário", priceCash: "650,00", priceInstallment: "800,00", installments: 4, features: ["4 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: true },
-    { name: "Complementar", priceCash: "1.300,00", priceInstallment: "1.500,00", installments: 10, features: ["10 Aulas Práticas", "Aluguel do veículo GRÁTIS"], highlight: false }
-  ]
-};
+
 
 const PlanosSection = () => {
   const [activeTab, setActiveTab] = useState('cat-b');
@@ -77,7 +53,7 @@ const PlanosSection = () => {
 
         {/* Tab Navigation */}
         <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {categories.map((cat) => (
+          {categories?.map((cat) => (
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
@@ -103,7 +79,7 @@ const PlanosSection = () => {
             transition={{ duration: 0.4 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            {plansData[activeTab].map((plan, index) => (
+            {plansData[activeTab]?.map((plan, index) => (
               <div 
                 key={index} 
                 className={`relative flex flex-col bg-white rounded-[2.5rem] p-8 transition-all duration-500 border-2 ${
@@ -140,7 +116,7 @@ const PlanosSection = () => {
 
                 {/* Features */}
                 <ul className="flex-grow space-y-4 mb-10">
-                  {plan.features.map((feature, idx) => (
+                  {plan.features?.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-3 text-slate-600 font-medium">
                       <CheckCircle2 className="text-green-500 shrink-0" size={20} />
                       {feature}

@@ -1,0 +1,222 @@
+{
+  "cat-b": [
+    {
+      "name": "Básico",
+      "priceCash": "499,00",
+      "priceInstallment": "599,00",
+      "installments": 10,
+      "features": [
+        "2 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Intermediário",
+      "priceCash": "779,00",
+      "priceInstallment": "899,00",
+      "installments": 10,
+      "features": [
+        "6 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": true
+    },
+    {
+      "name": "Complementar",
+      "priceCash": "990,00",
+      "priceInstallment": "1190,00",
+      "installments": 10,
+      "features": [
+        "10 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    }
+  ],
+  "cat-a":[
+    {
+      "name": "Básico",
+      "priceCash": "499,00",
+      "priceInstallment": "599,00",
+      "installments": 10,
+      "features": [
+        "2 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Intermediário",
+      "priceCash": "779,00",
+      "priceInstallment": "899,00",
+      "installments": 10,
+      "features": [
+        "6 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": true
+    },
+    {
+      "name": "Complementar",
+      "priceCash": "990,00",
+      "priceInstallment": "1190,00",
+      "installments": 10,
+      "features": [
+        "10 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    }
+  ],
+  "cat-ab": [
+    {
+      "name": "Básico",
+      "priceCash": "899,00",
+      "priceInstallment": "1190,00",
+      "installments": 10,
+      "features": [
+        "4 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Intermediário",
+      "priceCash": "1590,00",
+      "priceInstallment": "1790,00",
+      "installments": 10,
+      "features": [
+        "12 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Complementar",
+      "priceCash": "1890,00",
+      "priceInstallment": "2100,00",
+      "installments": 10,
+      "features": [
+        "20 Aulas Práticas",
+        "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": true
+    }
+  ],
+  "add-b": [
+    {
+      "name": "Básico",
+      "priceCash": "450,00",
+      "priceInstallment": "599,00",
+      "installments": 10,
+      "features": [
+        "2 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Intermediário",
+      "priceCash": "699,00",
+      "priceInstallment": "799,00",
+      "installments": 10,
+      "features": [
+        "6 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": true
+    },
+    {
+      "name": "Complementar",
+      "priceCash": "899,00",
+      "priceInstallment": "999,00",
+      "installments": 10,
+      "features": [
+        "10 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    }
+  ],
+  "add-a": [
+    {
+      "name": "Básico",
+      "priceCash": "450,00",
+      "priceInstallment": "599,00",
+      "installments": 10,
+      "features": [
+        "2 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    },
+    {
+      "name": "Intermediário",
+      "priceCash": "699,00",
+      "priceInstallment": "799,00",
+      "installments": 10,
+      "features": [
+        "6 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": true
+    },
+    {
+      "name": "Complementar",
+      "priceCash": "899,00",
+      "priceInstallment": "999,00",
+      "installments": 10,
+      "features": [
+        "10 Aulas Práticas",
+                "Taxa de matrícula",
+        "Livro didático",
+        "Reforço Teórico",
+        "Aluguel do veículo GRÁTIS"
+      ],
+      "highlight": false
+    }
+  ]
+}

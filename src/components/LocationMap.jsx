@@ -43,7 +43,7 @@ const LocationSection = () => {
             
             <h2 className="mb-8 text-3xl font-black leading-tight text-[#000000] lg:text-4xl">
               Venha nos visitar na <br />
-              <span className="text-[#0B1F92]">Zona Oeste</span>
+              <span className="text-[#0B1F92]">Zona Norte</span>
             </h2>
             
             <div className="space-y-8">
@@ -53,7 +53,7 @@ const LocationSection = () => {
                   <Store size={26} />
                 </div>
                 <div>
-                  <h3 className="mb-1 text-xl font-black text-[#000000]">Unidade Campo Grande</h3>
+                  <h3 className="mb-1 text-xl font-black text-[#000000]">Nossa Unidade</h3>
                   <p className="text-base leading-relaxed text-slate-600">
                     Rua O Tempo e O Vento, n° 45<br/>
                     Anil, Rio de Janeiro - RJ<br/>
