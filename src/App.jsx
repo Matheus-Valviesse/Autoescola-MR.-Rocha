@@ -13,11 +13,25 @@ function App() {
   return (
     <>
       <Header/>
-      <Hero/>
+
+      <div id="inicio">
+        <Hero/>
+      </div>
+      
       <Stats/>
-      <LocationMap/>
-      <Services/>
-      <GoogleReviews/>
+
+      <div id="localizacao">
+        <LocationMap/>
+      </div>
+      
+      <div id="planos">
+        <Services/>
+      </div>
+      
+      <div id="avaliacoes"> 
+        <GoogleReviews/>
+      </div>
+
       <Footer/>
 
     </>

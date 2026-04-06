@@ -2,6 +2,31 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const Header = () => {
+
+  const navItems = [
+    { name: 'Início', id: 'inicio' },
+    { name: 'Planos', id: 'planos' }, 
+    { name: 'Avaliações', id: 'avaliacoes' }, 
+    { name: 'Localização', id: 'localizacao' } 
+  ];
+
+  const scrollToSection = (e, targetId) => {
+    e.preventDefault(); 
+    
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      const headerOffset = 80; 
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <motion.header 
       // Animação de entrada: desliza de -100px para 0 e aumenta a opacidade
@@ -18,7 +43,6 @@ const Header = () => {
             src="/header-logo.svg" 
             alt="Logo Auto Escola" 
             className="w-20 h-20 object-contain"
-            // Leve efeito de escala na logo ao carregar
             initial={{ scale: 0.5 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -29,17 +53,17 @@ const Header = () => {
         {/* Desktop Nav */}
         <div className="hidden md:flex flex-1 justify-end gap-8 items-center">
           <nav className="flex gap-8">
-            {['Início', 'Sobre', 'Cursos', 'Contato'].map((item, index) => (
+            {navItems?.map((item, index) => (
               <motion.a 
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                // Anima cada link individualmente com um pequeno atraso (stagger)
+                key={item?.name}
+                href={`#${item.id}`}
+                onClick={(e) => scrollToSection(e, item.id)}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
                 className="text-sm font-medium text-slate-600 hover:text-[#0B1F92] transition-colors relative group"
               >
-                {item}
+                {item.name}
                 {/* Linha animada no hover */}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0B1F92] transition-all group-hover:w-full"></span>
               </motion.a>
