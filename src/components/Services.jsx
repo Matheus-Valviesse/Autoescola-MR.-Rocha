@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, Bike, ShieldCheck, Star, MousePointerClick, CheckCircle2 } from 'lucide-react';
 
@@ -16,12 +16,58 @@ const categories = [
 
 const PlanosSection = () => {
   const [activeTab, setActiveTab] = useState('cat-b');
+  const [plansData, setPlansData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getParcela = (totalString, numParcelas) => {
-    const total = parseFloat(totalString.replace('.', '').replace(',', '.'));
-    const parcela = total / numParcelas;
-    return parcela.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  };
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_LINK;
+        
+        const response = await fetch(API_URL);
+        
+        if (!response.ok) {
+          throw new Error('Falha ao carregar os dados da planilha.');
+        }
+
+        const rawData = await response.json();
+        
+        const grouped = {};
+        
+        const formatCurrency = (value) => {
+          if (!value) return "0,00";
+          const stringValue = String(value); 
+          const num = parseFloat(stringValue.replace(',', '.'));
+          return isNaN(num) ? "0,00" : num.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        };
+
+        rawData.forEach((row) => {
+          if (!grouped[row.id_categoria]) {
+            grouped[row.id_categoria] = [];
+          }
+
+          grouped[row.id_categoria].push({
+            name: row.nome_plano,
+            priceCash: formatCurrency(row.preco_a_vista),
+            priceInstallment: formatCurrency(row.preco_parcelado),
+            installmentsText: row.qtd_parcelas,
+            highlight: row.destaque === 'V',
+            features: row.beneficios ? row.beneficios.split('|').map(item => item.trim()) : []
+          });
+        });
+
+        setPlansData(grouped);
+      } catch (err) {
+        console.error("Erro na API:", err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   const handlePlanClick = (planName) => {
     const categoryLabel = categories.find(c => c.id === activeTab)?.label;
@@ -57,6 +103,7 @@ const PlanosSection = () => {
             <button
               key={cat.id}
               onClick={() => setActiveTab(cat.id)}
+              disabled={isLoading}
               className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-300 ${
                 activeTab === cat.id 
                   ? 'bg-[#0B1F92] text-white shadow-xl shadow-blue-200 scale-105' 
@@ -69,75 +116,87 @@ const PlanosSection = () => {
           ))}
         </div>
 
-        {/* Plan Grid */}
-        <AnimatePresence mode='wait'>
-          <motion.div 
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {plansData[activeTab]?.map((plan, index) => (
-              <div 
-                key={index} 
-                className={`relative flex flex-col bg-white rounded-[2.5rem] p-8 transition-all duration-500 border-2 ${
-                  plan.highlight 
-                    ? 'border-[#0B1F92] shadow-2xl scale-105 z-10' 
-                    : 'border-slate-50 shadow-sm hover:border-slate-200'
-                }`}
-              >
-                {plan.highlight && (
-                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#f9f91f] text-[#000000] px-5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-lg">
-                    <Star size={14} fill="currentColor" /> O mais procurado
-                  </div>
-                )}
-
-                <div className="mb-8">
-                  <h3 className="text-2xl font-black text-[#000000] mb-6">{plan.name}</h3>
-                  
-                  {/* Preço Box */}
-                  <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
-                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-2">À Vista</p>
-                    <div className="flex items-baseline gap-1 mb-4">
-                      <span className="text-lg font-bold text-[#0B1F92]">R$</span>
-                      <span className="text-5xl font-black tracking-tighter text-[#000000]">{plan.priceCash}</span>
+{isLoading ? (
+          <div className="text-center py-20">
+            <div className="w-10 h-10 border-4 border-slate-200 border-t-[#0B1F92] rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-[#0B1F92] font-bold animate-pulse">Carregando planos atualizados...</p>
+          </div>
+        ) : error ? (
+          <div className="text-center py-20 bg-red-50 rounded-2xl">
+            <p className="text-red-500 font-bold mb-2">Ops! Tivemos um problema ao carregar os planos.</p>
+            <p className="text-slate-500 text-sm">Por favor, atualize a página ou tente novamente mais tarde.</p>
+          </div>
+        ) : (
+          /* Plan Grid */
+          <AnimatePresence mode="wait">
+            <motion.div 
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {plansData[activeTab]?.map((plan, index) => (
+                <div 
+                  key={index} 
+                  className={`relative flex flex-col bg-white rounded-[2rem] p-6 transition-all duration-500 border-2 ${
+                    plan.highlight 
+                      ? 'border-[#0B1F92] shadow-2xl scale-105 z-10' 
+                      : 'border-slate-50 shadow-sm hover:border-slate-200'
+                  }`}
+                >
+                  {plan.highlight && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#f9f91f] text-[#000000] px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-lg">
+                      <Star size={12} fill="currentColor" /> Destaque
                     </div>
+                  )}
+
+                  <div className="mb-6">
+                    <h3 className="text-xl font-black text-[#000000] mb-4">{plan.name}</h3>
                     
-                    <div className="pt-4 border-t border-slate-200">
-                      <p className="text-sm text-slate-500">
-                        Ou em até <span className="font-bold text-[#000000]">{plan.installments}x</span> de:
-                      </p>
-                      <p className="text-2xl font-black text-[#0B1F92]">R$ {getParcela(plan.priceInstallment, plan.installments)}</p>
+                    <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                      <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">À Vista</p>
+                      <div className="flex items-baseline gap-1 mb-3">
+                        <span className="text-base font-bold text-[#0B1F92]">R$</span>
+                        <span className="text-4xl font-black tracking-tighter text-[#000000]">{plan.priceCash}</span>
+                      </div>
+                      
+                      <div className="pt-3 border-t border-slate-200">
+                        <p className="text-[11px] text-slate-500 font-medium mb-1">
+                          A Prazo (Total: R$ {plan.priceInstallment})
+                        </p>
+                        <p className="text-[13px] font-bold text-[#0B1F92] leading-tight">
+                          {plan.installmentsText}
+                        </p>
+                      </div>
                     </div>
                   </div>
+
+                  <ul className="flex-grow space-y-3 mb-8">
+                    {plan.features?.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-slate-600 font-medium leading-tight">
+                        <CheckCircle2 className="text-green-500 shrink-0 mt-0.5" size={16} />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button 
+                    onClick={() => handlePlanClick(plan.name)}
+                    className={`group w-full py-4 rounded-xl font-black text-xs transition-all duration-300 flex items-center justify-center gap-2 ${
+                    plan.highlight
+                      ? 'bg-[#f9f91f] text-[#000000] hover:bg-[#eaea0c] shadow-xl shadow-yellow-100'
+                      : 'bg-[#000000] text-white hover:bg-[#0B1F92]'
+                  }`}>
+                    ME MATRICULAR
+                    <MousePointerClick size={16} className="transition-transform group-hover:scale-125" />
+                  </button>
                 </div>
-
-                {/* Features */}
-                <ul className="flex-grow space-y-4 mb-10">
-                  {plan.features?.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-slate-600 font-medium">
-                      <CheckCircle2 className="text-green-500 shrink-0" size={20} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <button 
-                  onClick={() => handlePlanClick(plan.name)}
-                  className={`group w-full py-5 rounded-2xl font-black text-sm transition-all duration-300 flex items-center justify-center gap-3 ${
-                  plan.highlight
-                    ? 'bg-[#f9f91f] text-[#000000] hover:bg-[#eaea0c] shadow-xl shadow-yellow-100'
-                    : 'bg-[#000000] text-white hover:bg-[#0B1F92]'
-                }`}>
-                  QUERO ME MATRICULAR
-                  <MousePointerClick size={18} className="transition-transform group-hover:scale-125" />
-                </button>
-              </div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        )}
 
         {/* Disclaimer */}
         <div className="mt-16 text-center">
