@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, Bike, ShieldCheck, Star, MousePointerClick, CheckCircle2 } from 'lucide-react';
 
-import plansData from '../data/plans.json';
-console.log(plansData)
 const categories = [
   { id: 'cat-b', label: 'Carro (B)', icon: Car },
   { id: 'cat-a', label: 'Moto (A)', icon: Bike },
@@ -13,18 +11,31 @@ const categories = [
 ];
 
 
-
 const PlanosSection = () => {
   const [activeTab, setActiveTab] = useState('cat-b');
   const [plansData, setPlansData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const API_URL = import.meta.env.VITE_API_LINK;
+        const CACHE_KEY = 'planos_mr_rocha';
+        const CACHE_EXPIRATION_TIME = 60 * 60 * 1000; 
+
+        const cachedData = localStorage.getItem(CACHE_KEY);
         
+        if (cachedData) {
+          const { data, timestamp } = JSON.parse(cachedData);
+          
+          if (Date.now() - timestamp < CACHE_EXPIRATION_TIME) {
+            setPlansData(data);
+            setIsLoading(false);
+            return;
+          }
+        }
+
+        const API_URL = import.meta.env.VITE_API_LINK;
         const response = await fetch(API_URL);
         
         if (!response.ok) {
@@ -32,7 +43,6 @@ const PlanosSection = () => {
         }
 
         const rawData = await response.json();
-        
         const grouped = {};
         
         const formatCurrency = (value) => {
@@ -56,6 +66,11 @@ const PlanosSection = () => {
             features: row.beneficios ? row.beneficios.split('|').map(item => item.trim()) : []
           });
         });
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          data: grouped,
+          timestamp: Date.now()
+        }));
 
         setPlansData(grouped);
       } catch (err) {

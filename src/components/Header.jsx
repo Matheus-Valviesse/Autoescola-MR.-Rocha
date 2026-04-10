@@ -1,7 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React,{useState} from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { TiThMenu } from "react-icons/ti";
+import { IoMdClose } from "react-icons/io";
 
 const Header = () => {
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
     { name: 'Início', id: 'inicio' },
@@ -24,12 +28,13 @@ const Header = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
+
+      setIsMobileMenuOpen(false);
     }
   };
 
   return (
     <motion.header 
-      // Animação de entrada: desliza de -100px para 0 e aumenta a opacidade
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -64,7 +69,6 @@ const Header = () => {
                 className="text-sm font-medium text-slate-600 hover:text-[#0B1F92] transition-colors relative group"
               >
                 {item.name}
-                {/* Linha animada no hover */}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0B1F92] transition-all group-hover:w-full"></span>
               </motion.a>
             ))}
@@ -75,12 +79,39 @@ const Header = () => {
         <motion.button 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="flex md:hidden items-center justify-center p-2 text-slate-600"
         >
-          <span className="material-symbols-outlined">menu</span>
+          <span className="material-symbols-outlined"><TiThMenu/></span>
         </motion.button>
-
+        
       </div>
+
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-gray-100 shadow-xl overflow-hidden"
+          >
+            <nav className="flex flex-col px-4 py-6 gap-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={`#${item.id}`}
+                  onClick={(e) => scrollToSection(e, item.id)}
+                  className="text-base font-bold text-slate-600 hover:text-[#0B1F92] hover:bg-blue-50 px-4 py-3 rounded-xl transition-all"
+                >
+                  {item.name}
+                </a>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </motion.header>
   );
 };
