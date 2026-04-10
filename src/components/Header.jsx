@@ -16,21 +16,26 @@ const Header = () => {
 
   const scrollToSection = (e, targetId) => {
     e.preventDefault(); 
-    
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      const headerOffset = 80; 
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+    setIsMobileMenuOpen(false);
+    
+    setTimeout(() => {
 
-      setIsMobileMenuOpen(false);
-    }
+      const element = document.getElementById(targetId);
+    
+      if (element) {
+        const headerOffset = 80; 
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+
+    },100)
+    
   };
 
   return (
